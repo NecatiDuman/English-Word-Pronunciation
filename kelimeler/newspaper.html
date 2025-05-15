@@ -1,72 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>📰 Newspaper</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter', sans-serif;
-      background: #f4f7fa;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-    .container {
-      background: #fff;
-      padding: 30px;
-      max-width: 500px;
-      width: 90%;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-      text-align: center;
-    }
-    h1 {
-      font-size: 32px;
-      color: #2c3e50;
-      margin-bottom: 20px;
-    }
-    p {
-      font-size: 18px;
-      color: #34495e;
-      margin: 20px 0;
-    }
-    audio {
-      margin-top: 15px;
-      width: 100%;
-    }
-    .back-link {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 10px 20px;
-      background-color: #3498db;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: 600;
-      transition: background-color 0.3s ease;
-    }
-    .back-link:hover {
-      background-color: #2980b9;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>📰 Newspaper</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f7fa;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+  }
+  .container {
+    background: #fff;
+    padding: 30px;
+    max-width: 500px;
+    width: 90%;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    text-align: center;
+  }
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  p {
+    font-size: 1.2rem;
+    color: #34495e;
+    margin-bottom: 30px;
+  }
+  .play-button {
+    background: linear-gradient(145deg, #6a11cb, #2575fc);
+    border: none;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    box-shadow: 0 8px 15px rgba(37, 117, 252, 0.3);
+    color: white;
+    font-size: 36px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto 40px auto;
+  }
+  .play-button:hover {
+    background: linear-gradient(145deg, #2575fc, #6a11cb);
+    box-shadow: 0 12px 20px rgba(37, 117, 252, 0.5);
+  }
+  .icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+  }
+  .play-button.playing .icon {
+    transform: rotate(360deg);
+  }
+  a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  a:hover {
+    color: #2980b9;
+  }
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>📰 Newspaper</h1>
-    <p><strong>Tanım:</strong> A printed or digital publication that provides news and information.</p>
+<div class="container">
+  <h1>📰 Newspaper</h1>
+  <p><strong>Definition:</strong> A printed or digital publication that provides news and information.</p>
+  <button class="play-button" id="playBtn"><span class="icon">▶️</span></button>
+  <audio id="audio" src="sesler/newspaper.mp3"></audio>
+  <p><a href="index.html">⬅️ Back to list</a></p>
+</div>
 
-    <audio controls>
-      <source src="sesler/newspaper.mp3" type="audio/mpeg" />
-      Your browser does not support the audio element.
-    </audio>
+<script>
+  const btn = document.getElementById('playBtn');
+  const icon = btn.querySelector('.icon');
+  const audio = document.getElementById('audio');
 
-    <a href="index.html" class="back-link">⬅️ Geri Dön</a>
-  </div>
+  btn.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play();
+      btn.classList.add('playing');
+      icon.textContent = '⏸️';
+    } else {
+      audio.pause();
+      btn.classList.remove('playing');
+      icon.textContent = '▶️';
+    }
+  });
+
+  audio.addEventListener('ended', () => {
+    btn.classList.remove('playing');
+    icon.textContent = '▶️';
+  });
+</script>
 </body>
 </html>
